@@ -19,13 +19,9 @@ namespace CSV_Library
         // 將 Header 字串轉成 {欄位名稱, Index} 的對應表
         public static Dictionary<string, int> BuildHeaderIndexMap(string headerLine)
         {
-            var dict = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-            var headers = headerLine.Split(',');
-            for (int i = 0; i < headers.Length; i++)
-            {
-                dict[headers[i]] = i;
-            }
-            return dict;
+            return headerLine.Split(',')
+                             .Select((name, idx) => new { name, idx })
+                             .ToDictionary(x => x.name, x => x.idx);
         }
 
         public static string ConvertRecordToCsvLine<T>(T record, Dictionary<string, int> headerIndexMap)
@@ -46,10 +42,5 @@ namespace CSV_Library
             }
             return string.Join(",", values);
         }
-        //public static string[] ReadExistingLines(string filePath)
-        //{
-        //    return 
-        //}
-
     }
 }

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
-using System.IO;
 
 namespace CSV_Library
 {
@@ -15,10 +14,22 @@ namespace CSV_Library
         {
             // StreamWriter
             string filePath = "D:\\Coding\\家教123\\data.csv";  //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "records.csv");
-            RecordModel recordModel = new RecordModel();
-            List<RecordModel> recordList = new List<RecordModel>();
-            recordList.Add(recordModel);
-            CsvHelper.StreamWriter<RecordModel>(filePath, recordList);
+            ICsvService service = WritePatternFactory.Create();
+            //RecordModel recordModel = new RecordModel();
+            var recordList = new List<RecordModel>
+            {
+                new RecordModel
+                {
+                    Date = "2025/06/18",
+                    Price = "300",
+                    Type = "餐飲",
+                    Purpose = "午餐",
+                    Target = "家裡",
+                    Note = "",
+                    Picture = ""
+                }
+            };
+            service.AppendCsv(filePath, recordList);
 
 
 
@@ -41,22 +52,19 @@ namespace CSV_Library
 
             // StreamReader
             //string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "records.csv");
-            List<DataModel> lists = CsvHelper.StreamReader<DataModel>(filePath);
 
-            foreach (DataModel list in lists)
-            {
-                var properties = typeof(DataModel).GetProperties();
-                Console.WriteLine(list.Purpose);
-                //Console.WriteLine(list.Target);
-                Console.WriteLine(list.Price);
-                Console.WriteLine(list.Date);
-                //Console.WriteLine(list.Type);
-                //Console.WriteLine(list.Note);
-                //Console.WriteLine(list.Picture);
-                Console.WriteLine($"---------------------------------");
 
-            }
 
+
+
+            //var reader = new CsvStreamReader();
+
+            //var lists = new List<RecordModel>(reader.ReadCsv<RecordModel>(filePath));
+
+            //foreach (var item in lists)
+            //{
+            //    Console.WriteLine($"{item.Date} - {item.Price} - {item.Purpose}");
+            //}
         }
 
     }

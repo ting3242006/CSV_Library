@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CSV_Library
 {
-    public enum HeaderStatus
+    public abstract class AWritePattern
     {
-        NoFile,    // 檔案不存在
-        HasHeader, // 已有標題
-        NoHeader   // 有資料但缺標題
+        public abstract void WriteDataLines<T>(string filePath, IEnumerable<T> records);
     }
-
 }
