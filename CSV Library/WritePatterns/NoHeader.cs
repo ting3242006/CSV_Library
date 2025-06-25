@@ -12,14 +12,14 @@ namespace CSV_Library
     {
         public override void WriteDataLines<T>(string filePath, IEnumerable<T> records)
         {
-            string oldData = File.ReadAllText(filePath).TrimEnd('\n');
+            string oldData = File.ReadAllText(filePath);
             var props = typeof(T).GetProperties();
             string header = String.Join(",", props.Select(x => x.Name));
 
 
             StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8);
             writer.WriteLine(header);
-            writer.WriteLine(oldData);
+            writer.Write(oldData);
 
             foreach (T record in records)
             {

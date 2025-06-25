@@ -35,12 +35,5 @@ namespace CSV_Library
             }
             return pattern;
         }
-
-
-
-        public static ICsvService Create()
-        {
-            return new CsvService();
-        }
     }
 }
